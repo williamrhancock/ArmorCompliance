@@ -1,0 +1,22 @@
+{
+  "id": 4,
+  "name": "Admin",
+  "created": "2015-12-13T02:00:46.51",
+  "modified": null,
+  "members": [
+    {
+      "id": 2,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@example.com",
+      "added": "2015-12-13T02:01:30.923",
+      "enabled": true
+    }
+  ],
+  "permissions": [
+    1,
+    2,
+    3
+  ],
+  "default": true
+}

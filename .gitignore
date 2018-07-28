@@ -10,3 +10,9 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# My personal exclusions.
+auth.go
+*.json
+*Raw*
+*.xls*

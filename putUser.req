@@ -1,0 +1,19 @@
+{
+    "id": 2381,
+    "firstName": "John",
+    "lastName": "Smith",
+    "title": "",
+    "timezone": "GMT Standard Time",
+    "culture": "en-US",
+    "phonePrimary": {
+      "countryCode": 1,
+      "countryIsoCode": "US",
+      "number": "8880000000",
+      "phoneExt": null
+    },
+    "isMfaEnabled": true,
+    "mfaMode": "VoiceCall",
+    "mfaPinMode": "Standard",
+    "mfaPin": null,
+    "accountid": 2093
+  }
