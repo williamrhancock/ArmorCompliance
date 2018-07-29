@@ -30,7 +30,7 @@ func main() {
 	fmt.Println(string(GetArmor("/tickets/573730")))
 
 	{ // This looks like a by design limitation of the api role in armor.  Keep getting: {"Message":"Permission Denied to requested resource."}
-		bodyToSend := CreateUser{First: "Home", Last: "Away", Email: "williamrhancock@gmail.com", Roles: []CreateUserRoles{{ID: "1"}}}
+		bodyToSend := CreateUser{First: "Home", Last: "Away", Email: "willcock@gmail.com", Roles: []CreateUserRoles{{ID: "1"}}}
 		byteBody := PostArmor(bodyToSend, "/users")
 		fmt.Println(string(byteBody))
 	}
