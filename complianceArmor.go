@@ -6,6 +6,7 @@ https://developer.armor.com/#/
 */
 
 import (
+	"bytes"
 	"crypto/hmac"
 	"crypto/sha512"
 	"encoding/base64"
@@ -21,20 +22,18 @@ import (
 	"github.com/dchest/uniuri"
 )
 
-//Auth creds are kept as vars in ./auth.go
-
 func main() {
-	//coreAVAM()
-	//roleToUserTest()
+	coreAVAM()
+	roleToUserTest()
 	getPermissionTest()
 
-	/* { // Create user test - make this a function with easy entry cost.
-		bodyToSend := CreateUser{First: "Home", Last: "Away", Email: "williamrhancock@gmail.com", Roles: []CreateUserRoles{{ID: "5914"}}}
-		byteBody := PostArmor(bodyToSend)
-		fmt.Println(string(byteBody))
-	} */
+	fmt.Println(string(GetArmor("/tickets/573730")))
 
-	//fmt.Println(string(GetArmor("/tickets/573730")))
+	{ // This looks like a by design limitation of the api role in armor.  Keep getting: {"Message":"Permission Denied to requested resource."}
+		bodyToSend := CreateUser{First: "Home", Last: "Away", Email: "williamrhancock@gmail.com", Roles: []CreateUserRoles{{ID: "1"}}}
+		byteBody := PostArmor(bodyToSend, "/users")
+		fmt.Println(string(byteBody))
+	}
 
 }
 
@@ -42,10 +41,11 @@ func coreAVAM() {
 	byteBody := GetArmor("/core/avam")
 	c := &[]CoreAVAM{}
 	json.Unmarshal(byteBody, c)
+
 	for _, v := range *c {
 		fmt.Printf("%v: %v AntiMalwareStatus: %v\n", v.VmName, v.Os, v.OverallAntiMalwareStatus)
-
 	}
+
 }
 
 func roleToUserTest() {
@@ -97,19 +97,16 @@ func getPermissionTest() {
 }
 
 //PostArmor generic POST function the properly deals with the API key/secret/hmac stuff.
-func PostArmor(bodyToSend interface{}) []byte {
+func PostArmor(bodyToSend CreateUser, path string) []byte {
 	client := &http.Client{}
-	path := "/users"
 
 	byteToSend, err := json.Marshal(bodyToSend)
 	if err != nil {
 		log.Println(err)
 	}
 
-	bodyReader := strings.NewReader(string(byteToSend))
-
-	armorPSK := armorRequest("POST", path, &byteToSend)
-	request, error := http.NewRequest("POST", baseurl+path, bodyReader)
+	armorPSK := armorRequest("POST", path, byteToSend)
+	request, error := http.NewRequest("POST", baseurl+path, bytes.NewBuffer(byteToSend))
 
 	request.Header.Set("Authorization", armorPSK)
 	request.Header.Add("X-Account-Context", account["Homeaway"])
@@ -122,8 +119,7 @@ func PostArmor(bodyToSend interface{}) []byte {
 	defer response.Body.Close()
 	byteBody, _ := ioutil.ReadAll(response.Body)
 
-	fmt.Println(request)
-	fmt.Println(response)
+	//fmt.Println(response.Status)
 
 	return byteBody
 }
@@ -133,9 +129,9 @@ func GetArmor(path string) []byte {
 	client := &http.Client{}
 	var bodyToSend []byte
 
-	armorPSK := armorRequest("GET", path, &bodyToSend)
+	armorPSK := armorRequest("GET", path, bodyToSend)
 
-	request, error := http.NewRequest("GET", baseurl+path, nil)
+	request, error := http.NewRequest("GET", baseurl+path, bytes.NewBuffer(bodyToSend))
 
 	request.Header.Set("Authorization", armorPSK)
 	request.Header.Add("X-Account-Context", account["Homeaway"])
@@ -148,28 +144,23 @@ func GetArmor(path string) []byte {
 	defer response.Body.Close()
 	byteBody, _ := ioutil.ReadAll(response.Body)
 
-	fmt.Println(request)
-	fmt.Println(response)
+	//fmt.Println(response.Status)
 
 	return byteBody
 }
 
-func armorRequest(method, path string, bodyByte *[]byte) string {
-	var bodyobj *string
+func armorRequest(method, path string, bodyByte []byte) string {
 	nonce := uniuri.NewLen(10)
+	var bodyobj string
 	reqTime := strconv.FormatInt(time.Now().Unix(), 10)
 
 	if bodyByte != nil {
 		obj := sha512.New()
-		obj.Write(*bodyByte)
-		bodyobjpre := base64.StdEncoding.EncodeToString(obj.Sum(nil))
-		bodyobj = &bodyobjpre
-	} else {
-		bodyobjpre := ""
-		bodyobj = &bodyobjpre
+		obj.Write(bodyByte)
+		bodyobj = base64.StdEncoding.EncodeToString(obj.Sum(nil))
 	}
 
-	toHash := fmt.Sprintf("%v%v%v%v%v%v", appid, method, path, nonce, reqTime, *bodyobj) //string(*bodyByte))
+	toHash := fmt.Sprintf("%v%v%v%v%v%v", appid, method, path, nonce, reqTime, bodyobj)
 
 	hashObj := hmac.New(sha512.New, []byte(secret))
 	hashObj.Write([]byte(toHash))
