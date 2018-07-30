@@ -128,7 +128,7 @@ func (a *Armor) VmDetails(id string) []byte {
 func (a *Armor) VmID(id string) []byte {
 	return GetArmor("/stats/vms/"+id, nil)
 }
-func (a *Armor) StorageSummary(id string) []byte {
+func (a *Armor) StorageSummary() []byte {
 	return GetArmor("/storage/summary", nil)
 }
 func (a *Armor) VmsHybrid() []byte {
