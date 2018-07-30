@@ -98,3 +98,15 @@ type CreateUser struct {
 type CreateUserRoles struct {
 	ID string `json:id`
 }
+
+type Authentication struct {
+	Code        string `json:"code,omitempty"`
+	RedirectURI string `json:"redirect_uri,omitempty"`
+	Success     bool   `json:"success,omitempty"`
+}
+type Token struct {
+	AccessToken string `json:"access_token,omitempty"`
+	ExpiresIn   int    `json:"expires_in,omitempty"`
+	IDToken     string `json:"id_token,omitempty"`
+	TokenType   string `json:"token_type,omitempty"`
+}
