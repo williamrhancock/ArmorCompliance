@@ -215,7 +215,7 @@ func armorRequest(method, path string, bodyByte []byte) string {
 	return armorPSK
 }
 
-func armorBearer(username, password string) string {
+func ArmorBearer(username, password string) string {
 	authReq := struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
