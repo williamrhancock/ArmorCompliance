@@ -80,6 +80,61 @@ func (a *Armor) Products() []byte {
 	return GetArmor("/products", nil)
 }
 
+func (a *Armor) ProductID(id string) []byte {
+	return GetArmor("/products/"+id, nil)
+}
+
+func (a *Armor) Roles() []byte {
+	return GetArmor("/roles", nil)
+}
+
+func (a *Armor) RoleID(id string) []byte {
+	return GetArmor("/role/"+id, nil)
+}
+
+func (a *Armor) Usage() []byte {
+	return GetArmor("/usage", nil)
+}
+
+func (a *Armor) Users() []byte {
+	return GetArmor("/users", nil)
+}
+
+func (a *Armor) Apps() []byte {
+	return GetArmor("/apps", nil)
+}
+
+func (a *Armor) AppID(id string) []byte {
+	return GetArmor("/app/"+id, nil)
+}
+
+func (a *Armor) Locations() []byte {
+	return GetArmor("/locations", nil)
+}
+
+func (a *Armor) Orders() []byte {
+	return GetArmor("/orders", nil)
+}
+
+func (a *Armor) OrderID(id string) []byte {
+	return GetArmor("/order/"+id, nil)
+}
+func (a *Armor) Vms() []byte {
+	return GetArmor("/vms", nil)
+}
+func (a *Armor) VmDetails(id string) []byte {
+	return GetArmor("/vms/"+id, nil)
+}
+func (a *Armor) VmID(id string) []byte {
+	return GetArmor("/stats/vms/"+id, nil)
+}
+func (a *Armor) StorageSummary(id string) []byte {
+	return GetArmor("/storage/summary", nil)
+}
+func (a *Armor) VmsHybrid() []byte {
+	return GetArmor("/vms/hybridVmList", nil)
+}
+
 //PostArmor generic POST function the properly deals with the API key/secret/hmac stuff.
 func PostArmor(bodyToSend interface{}, path string, fhauth *string) []byte {
 	client := &http.Client{}
@@ -182,7 +237,8 @@ func armorBearer(username, password string) string {
 	return "FH-AUTH " + tokenData.AccessToken
 }
 
-func (a *Armor) JQprint(b []byte) {
+//JQP just expells the returned []byte in a jq friendly format with out the []s
+func (a *Armor) JQP(b []byte) {
 	fmt.Printf("%v\n",
 		strings.Trim(string(b), "[]"),
 	)
