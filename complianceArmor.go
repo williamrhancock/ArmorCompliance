@@ -38,100 +38,100 @@ func NewClient(accounts, appids, secrets string) *Armor {
 }
 
 //Accounts Return a list of accounts and the products related to the account id
-func (a *Armor) Accounts() []byte {
+func (a *Armor) Accounts(psk *string) []byte {
 	return GetArmor("/accounts", nil)
 }
 
 //AccountContacts Return a list of accounts and the products related to the account id
-func (a *Armor) AccountContacts() []byte {
+func (a *Armor) AccountContacts(psk *string) []byte {
 	return GetArmor("/account/contacts", nil)
 }
 
 //AccountID Return a list of accounts and the products related to the account id
-func (a *Armor) AccountID(id string) []byte {
+func (a *Armor) AccountID(id string, psk *string) []byte {
 	return GetArmor("/accounts/"+id, nil)
 }
 
 //Invoices Retrieve invoices for an account
-func (a *Armor) Invoices() []byte {
+func (a *Armor) Invoices(psk *string) []byte {
 	return GetArmor("/invoices", nil)
 }
 
 //InvoiceID Retrieve invoices for an account
-func (a *Armor) InvoiceID(id string) []byte {
+func (a *Armor) InvoiceID(id string, psk *string) []byte {
 	return GetArmor("/invoices/"+id, nil)
 }
 
 //InvoiceIDDetail Retrieve invoices for an account
-func (a *Armor) InvoiceIDDetail(id string) []byte {
+func (a *Armor) InvoiceIDDetail(id string, psk *string) []byte {
 	return GetArmor("/invoices/"+id+"/detail", nil)
 }
 
 //NotificationsAlerts Retrieve notification alerts for an account. Notifications are generated when certain actions are taken on an account, such as updates to a ticket or when a scheduled event happens.
-func (a *Armor) NotificationsAlerts() []byte {
+func (a *Armor) NotificationsAlerts(psk *string) []byte {
 	return GetArmor("/notifications/alerts", nil)
 }
 
-func (a *Armor) Permissions() []byte {
+func (a *Armor) Permissions(psk *string) []byte {
 	return GetArmor("/permissions", nil)
 }
 
-func (a *Armor) Products() []byte {
+func (a *Armor) Products(psk *string) []byte {
 	return GetArmor("/products", nil)
 }
 
-func (a *Armor) ProductID(id string) []byte {
+func (a *Armor) ProductID(id string, psk *string) []byte {
 	return GetArmor("/products/"+id, nil)
 }
 
-func (a *Armor) Roles() []byte {
+func (a *Armor) Roles(psk *string) []byte {
 	return GetArmor("/roles", nil)
 }
 
-func (a *Armor) RoleID(id string) []byte {
+func (a *Armor) RoleID(id string, psk *string) []byte {
 	return GetArmor("/role/"+id, nil)
 }
 
-func (a *Armor) Usage() []byte {
+func (a *Armor) Usage(psk *string) []byte {
 	return GetArmor("/usage", nil)
 }
 
-func (a *Armor) Users() []byte {
+func (a *Armor) Users(psk *string) []byte {
 	return GetArmor("/users", nil)
 }
 
-func (a *Armor) Apps() []byte {
+func (a *Armor) Apps(psk *string) []byte {
 	return GetArmor("/apps", nil)
 }
 
-func (a *Armor) AppID(id string) []byte {
+func (a *Armor) AppID(id string, psk *string) []byte {
 	return GetArmor("/app/"+id, nil)
 }
 
-func (a *Armor) Locations() []byte {
+func (a *Armor) Locations(psk *string) []byte {
 	return GetArmor("/locations", nil)
 }
 
-func (a *Armor) Orders() []byte {
+func (a *Armor) Orders(psk *string) []byte {
 	return GetArmor("/orders", nil)
 }
 
-func (a *Armor) OrderID(id string) []byte {
+func (a *Armor) OrderID(id string, psk *string) []byte {
 	return GetArmor("/order/"+id, nil)
 }
-func (a *Armor) Vms(PSK *string) []byte {
-	return GetArmor("/vms", PSK)
+func (a *Armor) Vms(psk *string) []byte {
+	return GetArmor("/vms", psk)
 }
-func (a *Armor) VmDetails(id string) []byte {
+func (a *Armor) VmDetails(id string, psk *string) []byte {
 	return GetArmor("/vms/"+id, nil)
 }
-func (a *Armor) VmID(id string) []byte {
+func (a *Armor) VmID(id string, psk *string) []byte {
 	return GetArmor("/stats/vms/"+id, nil)
 }
-func (a *Armor) StorageSummary() []byte {
+func (a *Armor) StorageSummary(psk *string) []byte {
 	return GetArmor("/storage/summary", nil)
 }
-func (a *Armor) VmsHybrid() []byte {
+func (a *Armor) VmsHybrid(psk *string) []byte {
 	return GetArmor("/vms/hybridVmList", nil)
 }
 
