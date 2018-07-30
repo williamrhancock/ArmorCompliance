@@ -21,6 +21,13 @@ import (
 	"github.com/dchest/uniuri"
 )
 
+var (
+	baseurl = "https://api.armor.com"
+	account int
+	appid   string
+	secret  string
+)
+
 func armor() *Armor {
 	return &Armor{}
 }
@@ -43,7 +50,7 @@ func PostArmor(bodyToSend interface{}, path string, fhauth *string) []byte {
 		request.Header.Set("Authorization", *fhauth)
 	}
 	request.Header.Add("Content-Type", "application/json")
-	request.Header.Add("X-Account-Context", account["Homeaway"])
+	request.Header.Add("X-Account-Context", string(account))
 
 	response, error := client.Do(request)
 	if error != nil {
@@ -71,7 +78,7 @@ func GetArmor(path string, fhauth *string) []byte {
 		request.Header.Set("Authorization", *fhauth)
 	}
 	request.Header.Add("Content-Type", "application/json")
-	request.Header.Add("X-Account-Context", account["Homeaway"])
+	request.Header.Add("X-Account-Context", string(account))
 
 	response, error := client.Do(request)
 	if error != nil {

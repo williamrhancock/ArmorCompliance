@@ -16,3 +16,4 @@ auth.go
 *.json
 *Raw*
 *.xls*
+*.ignore
