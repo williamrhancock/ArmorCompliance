@@ -23,7 +23,7 @@ import (
 
 var (
 	baseurl = "https://api.armor.com"
-	account int
+	account string
 	appid   string
 	secret  string
 )
@@ -51,7 +51,7 @@ func PostArmor(bodyToSend interface{}, path string, fhauth *string) []byte {
 		request.Header.Set("Authorization", *fhauth)
 	}
 	request.Header.Add("Content-Type", "application/json")
-	request.Header.Add("X-Account-Context", string(account))
+	request.Header.Add("X-Account-Context", account)
 
 	response, error := client.Do(request)
 	if error != nil {
@@ -79,7 +79,7 @@ func GetArmor(path string, fhauth *string) []byte {
 		request.Header.Set("Authorization", *fhauth)
 	}
 	request.Header.Add("Content-Type", "application/json")
-	request.Header.Add("X-Account-Context", string(account))
+	request.Header.Add("X-Account-Context", account)
 
 	response, error := client.Do(request)
 	if error != nil {
