@@ -119,8 +119,8 @@ func (a *Armor) Orders() []byte {
 func (a *Armor) OrderID(id string) []byte {
 	return GetArmor("/order/"+id, nil)
 }
-func (a *Armor) Vms() []byte {
-	return GetArmor("/vms", nil)
+func (a *Armor) Vms(PSK *string) []byte {
+	return GetArmor("/vms", PSK)
 }
 func (a *Armor) VmDetails(id string) []byte {
 	return GetArmor("/vms/"+id, nil)
