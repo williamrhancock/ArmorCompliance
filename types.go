@@ -1,10 +1,16 @@
-package main
+package armor
 
 type Armor struct {
+}
+
+type ArmorOverride struct {
+}
+
+/* type Armor struct {
 	Users       *[]UsersResponse
 	Permissions *[]PermissionsResponse
 	Roles       *[]RoleResponse
-}
+} */
 
 type UsersResponse struct {
 	ApiKeyCount        float64   `json:"apiKeyCount,omitempty"`
