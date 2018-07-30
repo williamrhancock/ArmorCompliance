@@ -29,7 +29,11 @@ var (
 )
 
 //NewClient supports the api & bearer calls
-func NewClient(account, appid, secret string) *Armor {
+func NewClient(accounts, appids, secrets string) *Armor {
+	account = accounts
+	appid = appids
+	secret = secrets
+	fmt.Println(account, appid, secret)
 	return &Armor{}
 }
 
@@ -117,6 +121,7 @@ func GetArmor(path string, fhauth *string) []byte {
 	if fhauth == nil {
 		armorPSK := armorRequest("GET", path, bodyToSend)
 		request.Header.Set("Authorization", armorPSK)
+		fmt.Println("PSK:GET:", armorPSK)
 	} else {
 		request.Header.Set("Authorization", *fhauth)
 	}
