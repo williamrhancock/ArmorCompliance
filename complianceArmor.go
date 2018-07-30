@@ -33,6 +33,49 @@ func NewClient(account, appid, secret string) *Armor {
 	return &Armor{}
 }
 
+//Accounts Return a list of accounts and the products related to the account id
+func (a *Armor) Accounts() []byte {
+	return GetArmor("/accounts", nil)
+}
+
+//AccountContacts Return a list of accounts and the products related to the account id
+func (a *Armor) AccountContacts() []byte {
+	return GetArmor("/account/contacts", nil)
+}
+
+//AccountID Return a list of accounts and the products related to the account id
+func (a *Armor) AccountID(id string) []byte {
+	return GetArmor("/accounts/"+id, nil)
+}
+
+//Invoices Retrieve invoices for an account
+func (a *Armor) Invoices() []byte {
+	return GetArmor("/invoices", nil)
+}
+
+//InvoiceID Retrieve invoices for an account
+func (a *Armor) InvoiceID(id string) []byte {
+	return GetArmor("/invoices/"+id, nil)
+}
+
+//InvoiceIDDetail Retrieve invoices for an account
+func (a *Armor) InvoiceIDDetail(id string) []byte {
+	return GetArmor("/invoices/"+id+"/detail", nil)
+}
+
+//NotificationsAlerts Retrieve notification alerts for an account. Notifications are generated when certain actions are taken on an account, such as updates to a ticket or when a scheduled event happens.
+func (a *Armor) NotificationsAlerts() []byte {
+	return GetArmor("/notifications/alerts", nil)
+}
+
+func (a *Armor) Permissions() []byte {
+	return GetArmor("/permissions", nil)
+}
+
+func (a *Armor) Products() []byte {
+	return GetArmor("/products", nil)
+}
+
 //PostArmor generic POST function the properly deals with the API key/secret/hmac stuff.
 func PostArmor(bodyToSend interface{}, path string, fhauth *string) []byte {
 	client := &http.Client{}
@@ -42,10 +85,10 @@ func PostArmor(bodyToSend interface{}, path string, fhauth *string) []byte {
 		log.Println(err)
 	}
 
-	armorPSK := armorRequest("POST", path, byteToSend)
 	request, error := http.NewRequest("POST", baseurl+path, bytes.NewBuffer(byteToSend))
 
 	if fhauth == nil {
+		armorPSK := armorRequest("POST", path, byteToSend)
 		request.Header.Set("Authorization", armorPSK)
 	} else {
 		request.Header.Set("Authorization", *fhauth)
@@ -69,11 +112,10 @@ func GetArmor(path string, fhauth *string) []byte {
 	client := &http.Client{}
 	var bodyToSend []byte
 
-	armorPSK := armorRequest("GET", path, bodyToSend)
-
 	request, error := http.NewRequest("GET", baseurl+path, bytes.NewBuffer(bodyToSend))
 
 	if fhauth == nil {
+		armorPSK := armorRequest("GET", path, bodyToSend)
 		request.Header.Set("Authorization", armorPSK)
 	} else {
 		request.Header.Set("Authorization", *fhauth)
