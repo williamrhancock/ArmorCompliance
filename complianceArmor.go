@@ -28,7 +28,8 @@ var (
 	secret  string
 )
 
-func armor() *Armor {
+//NewClient supports the api & bearer calls
+func NewClient(account, appid, secret string) *Armor {
 	return &Armor{}
 }
 
