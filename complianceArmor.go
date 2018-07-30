@@ -16,6 +16,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/dchest/uniuri"
@@ -179,4 +180,10 @@ func armorBearer(username, password string) string {
 	json.Unmarshal(tokenResp, tokenData)
 
 	return "FH-AUTH " + tokenData.AccessToken
+}
+
+func (a *Armor) JQprint(b []byte) {
+	fmt.Printf("%v\n",
+		strings.Trim(string(b), "[]"),
+	)
 }
