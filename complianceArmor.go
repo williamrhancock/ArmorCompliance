@@ -135,6 +135,18 @@ func (a *Armor) VmsHybrid(psk *string) []byte {
 	return GetArmor("/vms/hybridVmList", nil)
 }
 
+func (a *Armor) Tickets(psk *string) []byte {
+	return GetArmor("/tickets", nil)
+}
+
+func (a *Armor) TicketID(id string, psk *string) []byte {
+	return GetArmor("/tickets/"+id, nil)
+}
+
+func (a *Armor) TicketAttachments(id string, psk *string) []byte {
+	return GetArmor("/tickets/"+id+"/attachments", nil)
+}
+
 //PostArmor generic POST function the properly deals with the API key/secret/hmac stuff.
 func PostArmor(bodyToSend interface{}, path string, fhauth *string) []byte {
 	client := &http.Client{}
