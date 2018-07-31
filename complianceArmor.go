@@ -101,7 +101,7 @@ func (a *Armor) Users(psk *string) []byte {
 }
 
 func (a *Armor) UsersID(id string, psk *string) []byte {
-	return GetArmor("/user/"+id, psk)
+	return GetArmor("/users/"+id, psk)
 }
 
 func (a *Armor) Apps(psk *string) []byte {
