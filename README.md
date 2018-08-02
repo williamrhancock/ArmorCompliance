@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	armors := armor.NewClient("4780",
+	armors := armor.NewClient("CustomerContextID",
 		"Generate this on armor's portal",
 		"Generate this on armor's portal")
     
